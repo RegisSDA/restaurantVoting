@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.github.regissda.restaurantvoting.model"/>
+    <context:component-scan base-package="com.github.regissda.restaurantvoting.repository"/>
+    <jpa:repositories base-package="com.github.regissda.restaurantvoting.repository"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close"
+          p:driverClassName="org.h2.Driver"
+          p:url="jdbc:h2:file:D:\JAVA\TopJava\restaurantVoting\DB\restvoteDB"
+          p:username="admin"
+          p:password="admin"
+    />
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:packagesToScan="com.github.regissda.restaurantvoting.model"
+    >
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+                <entry key="hibernate.show_sql" value="true"/>
+            </map>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+
+    </bean>
+
+
+</beans>
