@@ -4,19 +4,27 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/jpa
-        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
+
+    <jdbc:initialize-database>
+        <jdbc:script location="classpath:db/setSchema.sql"/>
+        <!--<jdbc:script location="db/populateDB.sql"/>-->
+    </jdbc:initialize-database>
 
     <context:annotation-config/>
     <context:component-scan base-package="com.github.regissda.restaurantvoting.model"/>
     <context:component-scan base-package="com.github.regissda.restaurantvoting.repository"/>
     <jpa:repositories base-package="com.github.regissda.restaurantvoting.repository"/>
+
+
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close"

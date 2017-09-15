@@ -1,5 +1,6 @@
 package com.github.regissda.restaurantvoting.repository;
 
+import com.github.regissda.restaurantvoting.model.Role;
 import com.github.regissda.restaurantvoting.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,15 +23,7 @@ public class UsersDAOTest {
     @Autowired
     private UsersDAO usersDAO;
 
-    @Test
-    public void getTest() {
-        User expected = new User();
-        expected.setLogin("testuser1");
-        expected.setPassword("testuser1");
-        System.out.println("reults: "+usersDAO.getUserByLogin(expected.getLogin()).getLogin());
 
-        assertEquals(expected.getPassword(),usersDAO.getUserByLogin(expected.getLogin()).getPassword());
-    }
     @Test
     public void findTest() {
         User expected = new User();
@@ -54,5 +47,18 @@ public class UsersDAOTest {
         System.out.println(getedUser.getLogin()+" : "+getedUser.getPassword());
     }
 
+    @Test
+    public void fullGetTest(){
+        User expected = new User();
+        expected.setLogin("testuser1");
+        expected.setPassword("testuser1");
+        User geted = usersDAO.findOne(expected.getLogin());
+        System.out.println("reults: "+geted.getLogin());
+
+        for (Role r:geted.getRoles()){
+            System.out.println(r);
+        }
+        assertEquals(expected.getPassword(),usersDAO.findOne(expected.getLogin()).getPassword());
+    }
 
 }

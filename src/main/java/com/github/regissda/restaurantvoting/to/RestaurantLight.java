@@ -5,4 +5,12 @@ package com.github.regissda.restaurantvoting.to;
  */
 public class RestaurantLight {
     private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

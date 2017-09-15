@@ -5,7 +5,16 @@ package com.github.regissda.restaurantvoting.to;
  */
 public class RestaurantWithVotes {
     private String name;
-    private int votes;
+    private long votes;
+
+    public RestaurantWithVotes() {
+    }
+
+    public RestaurantWithVotes(String name, long votes) {
+
+        this.name = name;
+        this.votes = votes;
+    }
 
     public String getName() {
         return name;
@@ -15,11 +24,11 @@ public class RestaurantWithVotes {
         this.name = name;
     }
 
-    public int getVotes() {
+    public long getVotes() {
         return votes;
     }
 
-    public void setVotes(int votes) {
+    public void setVotes(long votes) {
         this.votes = votes;
     }
 }

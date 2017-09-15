@@ -21,6 +21,16 @@ public class Vote {
     private LocalDate voteDate;
 
 
+    public Vote() {
+    }
+
+    public Vote(User user, Restaurant restaurant, LocalDate voteDate) {
+
+        this.user = user;
+        this.restaurant = restaurant;
+        this.voteDate = voteDate;
+    }
+
     public Integer getId() {
         return id;
     }
