@@ -4,7 +4,7 @@
 REST API Документация
 
 
-<a id=Удалить ресторан">Удалить ресторан</a>
+[Удалить ресторан](#test)
 
 Интерфейс ADMIN - rest/v1/admin
 
@@ -47,7 +47,7 @@ Sample Call:
 Notes:
 
 
-[hlink](#Удалить рестаран)Удалить рестаран
+<a name="test"><h3>Удалить рестаран</h3></a>
 
 URL: /restaurants/:name
 
