@@ -30,23 +30,5 @@ public class AdminRestControllerTest {
     @Autowired
     private AdminRestController adminRestController;
 
-    @Test
-    public void createOrUpdateRestaurant() throws Exception {
-        RestaurantWithDishes restaurant = new RestaurantWithDishes();
-        restaurant.setName("unitTestRest1");
-        List<Dish> menu = new LinkedList<>();
-        for (int i =0; i<4;i++){
-            menu.add(new Dish("dish"+i,500+150*i));
-        }
-        restaurant.setDishes(menu);
-        adminRestController.createOrUpdateRestaurant(restaurant);
-
-        RestaurantWithDishes restaurantWithDishes = adminRestController.getRestaurant(restaurant.getName());
-        System.out.println(restaurantWithDishes.getName());
-        System.out.println();
-        for (Dish d:restaurantWithDishes.getDishes()){
-            System.out.println(d.getName());
-        }
-    }
 
 }

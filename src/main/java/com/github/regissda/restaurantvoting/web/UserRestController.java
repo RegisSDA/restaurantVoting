@@ -90,8 +90,11 @@ public class UserRestController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "restaurants/votes/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RestaurantWithVotes>> getRestaurantsRating(@PathVariable ("date")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+    @GetMapping(value = "restaurants/votes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RestaurantWithVotes>> getRestaurantsRating(@RequestParam (value = "date",required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+        if(date==null){
+            date = LocalDate.now();
+        }
         return new ResponseEntity<>(votesDAO.findAllByVoteDateEquals(date).stream()
                 .collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.counting()))
                 .entrySet().stream()
@@ -105,8 +108,11 @@ public class UserRestController {
         return new ResponseEntity<>(restaurantDAO.findAllEager().stream().map(a->convert(a,RestaurantWithDishes.class)).collect(Collectors.toList()),HttpStatus.OK);
     }
 
-    @GetMapping(value = "restaurants/top1/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantWithDishes> getTop(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+    @GetMapping(value = "restaurants/top1",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestaurantWithDishes> getTop(@RequestParam(name = "date",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+        if(date==null){
+            date = LocalDate.now();
+        }
         Optional<Map.Entry<Restaurant,Long>> top = votesDAO.findAllByVoteDateEquals(date).stream()
                 .collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.counting()))
                 .entrySet().stream()
