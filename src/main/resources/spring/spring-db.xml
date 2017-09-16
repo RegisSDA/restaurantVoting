@@ -5,13 +5,19 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/jpa
-        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        ">
 
 
     <jdbc:initialize-database>
@@ -23,10 +29,13 @@
     <context:component-scan base-package="com.github.regissda.restaurantvoting.model"/>
     <context:component-scan base-package="com.github.regissda.restaurantvoting.repository"/>
     <jpa:repositories base-package="com.github.regissda.restaurantvoting.repository"/>
+    <tx:annotation-driven/>
 
 
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close"
           p:driverClassName="org.h2.Driver"
           p:url="jdbc:h2:file:D:\JAVA\TopJava\restaurantVoting\DB\restvoteDB"

@@ -14,7 +14,7 @@ import java.util.List;
 public class Restaurant {
     @Id
     private String name;
-    @ElementCollection(targetClass = Dish.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Dish.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "rest_menu")
     @JoinColumn(name = "restaurant_name")
     private List<Dish> menu;

@@ -101,13 +101,14 @@ URL Params: no
 Data Params: no  
 Success Response:  
 Code: 200  
-{"restaurant": "testrest1","date": "2017-09-10"}
-    
-Error Response:
+{"restaurant": "testrest1","date": "2017-09-10"}  
+Error Response:  
+Code: 404  
+Content: { error : "Not found" }  
 Sample Call:
 Notes:
 
-<a id="get_vote"><h3>оздать/обновить голос</h3></a>
+<a id="post_vote"><h3>Создать/обновить голос</h3></a>
 
 URL: /votes  
 Method: POST  
@@ -116,11 +117,13 @@ Data Params: JSON
 {"restaurant": "testrest1","date": "2017-09-10"}  
 Success Response:  
 Code: 200  
-Error Response:
+Error Response:  
+Code: 403  
+Content: { error : "Voting is over at 11:00" }  
 Sample Call:
 Notes: Полосование доступно до 11:00 по времени сервера, до этого срока возможно свободно менять голос, после 11 голоса не принимаются
 
-<a id="get_vote"><h3>Удалить голос</h3></a>
+<a id="del_vote"><h3>Удалить голос</h3></a>
 
 URL: /votes  
 Method: DELETE  
@@ -128,11 +131,14 @@ URL Params: no
 Data Params: no  
 Success Response:  
 Code: 200  
-Error Response:
+Error Response:  
+Code: 403  
+Content: { error : "Voting is over at 11:00" }  
+
 Sample Call:  
 Notes: Отказаться можно только от голоса за текщую дату до 11:00 по времени сервера 
 
-<a id="get_vote"><h3>Получить голоса за рестораны на текущий момент </h3></a>
+<a id="get_rest_with_votes"><h3>Получить голоса за рестораны на текущий момент </h3></a>
 
 URL: /restaurants/votes  
 Method: GET  
@@ -140,13 +146,12 @@ URL Params: no
 Data Params: no  
 Success Response:  
 Code: 200  
-  
 Error Response:
 Sample Call:
 Notes: 
 
 
-<a id="get_vote"><h3>Получить список ресторанов с меню</h3></a>
+<a id="get_rest_with_menu"><h3>Получить список ресторанов с меню</h3></a>
 
 URL: /restaurants  
 Method: GET  
@@ -159,7 +164,7 @@ Error Response:
 Sample Call:
 Notes:
  
-<a id="get_vote"><h3>Получить ресторан с наибольшим числом голосов</h3></a>
+<a id="get_top1"><h3>Получить ресторан с наибольшим числом голосов</h3></a>
 
 URL: /restaurants/top1    
 Method: GET  
@@ -170,4 +175,4 @@ Code: 200
 {"name":"testrest1","dishes":[{"name":"dish1","price":1000},{"name":"dish2","price":900},{"name":"dish3","price":800}]}  
 Error Response:
 Sample Call:
-Notes: 
+Notes: При одинаковом числе голосов возвращается 
