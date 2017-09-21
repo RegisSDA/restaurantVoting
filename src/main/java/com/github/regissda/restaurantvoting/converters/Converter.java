@@ -16,6 +16,7 @@ public class Converter {
             T result = target.newInstance();
             if (result instanceof VoteTO) {
                 Vote source = (Vote) input;
+                ((VoteTO) result).setId(source.getId());
                 ((VoteTO) result).setRestaurant(source.getRestaurant().getName());
                 ((VoteTO) result).setDate(source.getVoteDate().toString());
             }
@@ -28,6 +29,7 @@ public class Converter {
                 ((RestaurantWithDishes) result).setName(source.getName());
                 ((RestaurantWithDishes) result).setDishes(source.getMenu());
             }
+
 
             return result;
         }catch(InstantiationException | IllegalAccessException e){

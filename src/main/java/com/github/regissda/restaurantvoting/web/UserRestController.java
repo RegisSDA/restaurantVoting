@@ -11,17 +11,19 @@ import com.github.regissda.restaurantvoting.repository.VotesDAO;
 import com.github.regissda.restaurantvoting.to.RestaurantWithDishes;
 import com.github.regissda.restaurantvoting.to.RestaurantWithVotes;
 import com.github.regissda.restaurantvoting.to.VoteTO;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
-import java.lang.annotation.Documented;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -68,22 +70,31 @@ public class UserRestController {
         return new ResponseEntity<VoteTO>(convert(vote, VoteTO.class),HttpStatus.OK);
     }
 
+    @CacheEvict(value = "top1", allEntries = true)
     @PostMapping(value = "/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity createOrUpdateVote(@RequestBody VoteTO voteTO) {
-        if (LocalTime.now().isAfter(VOTING_STOP_TIME) || !voteTO.getDate().equals(LocalDate.now().toString())) {
-            Vote vote = new Vote(usersDAO.getOne(AutorizedUser.getUserName()), restaurantDAO.getOne(voteTO.getRestaurant()), LocalDate.now());
-            votesDAO.save(vote);
+        URI uriOfNewResource;
+        Vote saved;
+        if (LocalTime.now().isBefore(VOTING_STOP_TIME) && voteTO.getDate().equals(LocalDate.now().toString())) {
+            Vote vote = new Vote(voteTO.getId(),usersDAO.getOne(AutorizedUser.getUserName()), restaurantDAO.getOne(voteTO.getRestaurant()), LocalDate.now());
+            saved = votesDAO.save(vote);
+            uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_USER_URL + "/votes/{id}")
+                    .buildAndExpand(saved.getId()).toUri();
+
+
         } else {
             throw new VotingOverException();
         }
-        return new ResponseEntity(HttpStatus.CREATED);
+        return ResponseEntity.created(uriOfNewResource).body(null);
     }
 
-    @DeleteMapping(value = "/votes")
-    public ResponseEntity deleteCurrentVote() {
-        if (LocalTime.now().isAfter(VOTING_STOP_TIME)) {
-            votesDAO.delete(new Vote(usersDAO.getOne(AutorizedUser.getUserName()), null, LocalDate.now()));
+    @CacheEvict(value = "top1",allEntries = true)
+    @DeleteMapping(value = "/votes/{id}")
+    public ResponseEntity deleteCurrentVote(@PathVariable("id") Integer id) {
+        if (LocalTime.now().isBefore(VOTING_STOP_TIME)) {
+            votesDAO.delete(id);
         } else {
             throw new VotingOverException();
         }
@@ -103,16 +114,20 @@ public class UserRestController {
                 .collect(Collectors.toList()),HttpStatus.OK);
     }
 
+    @Cacheable("restaurants")
     @GetMapping(value = "restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantWithDishes>> getRestaurants(){
+        System.out.println("Not Cache");
         return new ResponseEntity<>(restaurantDAO.findAllEager().stream().map(a->convert(a,RestaurantWithDishes.class)).collect(Collectors.toList()),HttpStatus.OK);
     }
 
+    @Cacheable(value="top1")
     @GetMapping(value = "restaurants/top1",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantWithDishes> getTop(@RequestParam(name = "date",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
         if(date==null){
             date = LocalDate.now();
         }
+        System.out.println("Not Cache");
         Optional<Map.Entry<Restaurant,Long>> top = votesDAO.findAllByVoteDateEquals(date).stream()
                 .collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.counting()))
                 .entrySet().stream()
@@ -120,7 +135,11 @@ public class UserRestController {
                         .comparingLong((Map.Entry<Restaurant,Long> a)->a.getValue())
                         .thenComparing((Map.Entry<Restaurant,Long> a)->a.getKey().getName()));
 
-        return new ResponseEntity<>(top.isPresent()?convert(top.get().getKey(),RestaurantWithDishes.class):null,HttpStatus.OK);
+        RestaurantWithDishes restaurant = null;
+        if (top.isPresent()){
+            restaurant = convert(restaurantDAO.findOneEager(top.get().getKey().getName()),RestaurantWithDishes.class);
+        }
+        return new ResponseEntity<>(restaurant,HttpStatus.OK);
     }
 
 }

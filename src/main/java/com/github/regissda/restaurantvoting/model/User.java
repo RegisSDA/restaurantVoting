@@ -3,6 +3,7 @@ package com.github.regissda.restaurantvoting.model;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
-    private Set<Role> roles;
+    private Set<Role> roles = EnumSet.noneOf(Role.class);
 
     public String getLogin() {
         return login;
@@ -45,5 +46,29 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public User(String login, String password, Set<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.roles.addAll(roles);
+    }
+
+    public User(String login, String password, Role... roles) {
+        this.login = login;
+        this.password = password;
+        this.roles.addAll(Arrays.asList(roles));
+    }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ import com.github.regissda.restaurantvoting.to.RestaurantLight;
 import com.github.regissda.restaurantvoting.to.RestaurantWithDishes;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class AdminRestController {
         return new ResponseEntity<>(convert(restaurant, RestaurantWithDishes.class),HttpStatus.OK);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity createOrUpdateRestaurant(@RequestBody RestaurantWithDishes restaurantTO) {
@@ -54,6 +56,7 @@ public class AdminRestController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @DeleteMapping(value = "/{name}")
     public ResponseEntity deleteRestaurant(@PathVariable("name") String name) {
         restaurantDAO.delete(name);

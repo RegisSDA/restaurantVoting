@@ -32,7 +32,7 @@ Success Response:
 Code: 200  
 Content: [{ name : "restaurant_1" },{ name : "restaurant_2"}]  
 Error Response:  
-Sample Call:  
+Sample Call:  curl -s http://localhost:8080/rest/v1/admin/restaurants  
 Notes: Рестораны содержат только название
 
 <a name="rest_get"><h3>Получить ресторан</h3></a>
@@ -43,11 +43,11 @@ URL Params: no
 Data Params: no  
 Success Response:  
 Code: 200  
-Content: {name : "restaurant", dishes : [{name : "dish1"},{name : "dish2"}]}  
+Content: {"name":"testrest1","dishes":[{"name":"dish1","price":1000},{"name":"dish2","price":900},{"name":"dish3","price":800}]}  
 Error Response:  
 Code 404  
 Content:{error : "Not Found"}
-Sample Call:  
+Sample Call: curl -s http://localhost:8080/rest/v1/admin/restaurants/testrest1
 Notes:  
 
 
@@ -70,7 +70,7 @@ URL: /restaurants
 Method: POST  
 URL Params: no  
 Data Params: JSON  
-{name : "restaurant", dishes : [{name : "dish1"},{name : "dish2"}]}
+{name : "restaurant", dishes : [{name : "dish1", price : 1000},{name : "dish2", price : 900}]}  
 Success Response:  
 Code: 201  
 Error Response:  
@@ -149,8 +149,9 @@ URL Params:
 Data Params: no  
 Success Response:  
 Code: 200  
-Error Response:
-Sample Call:
+[{"name":"testrest3","votes":1}]  
+Error Response:  
+Sample Call:  
 Notes: При отсутствии даты - возвращает за сегодняшний день
 
 

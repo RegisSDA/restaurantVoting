@@ -1,0 +1,26 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="false">
+
+
+    <diskStore path="D\temp"/>
+
+    <!-- objects are evicted from the cache every 60 seconds -->
+
+    <cache name="top1"
+           maxEntriesLocalHeap="100"
+           memoryStoreEvictionPolicy="LFU"
+          >
+            <pinning store="localMemory"/>
+    </cache>
+
+    <cache name="restaurants"
+           maxEntriesLocalHeap="100"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off"/>
+
+</ehcache>

@@ -4,6 +4,7 @@ package com.github.regissda.restaurantvoting.to;
  * Created by MSI on 14.09.2017.
  */
 public class VoteTO {
+    private Integer id;
     private String restaurant;
     private String date;
 
@@ -21,5 +22,13 @@ public class VoteTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

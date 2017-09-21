@@ -1,6 +1,7 @@
 package com.github.regissda.restaurantvoting.repository;
 
 import com.github.regissda.restaurantvoting.model.Restaurant;
+import org.junit.runner.RunWith;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

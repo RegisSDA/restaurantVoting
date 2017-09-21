@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Table(name = "votes")
 public class Vote {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "user_login")
@@ -24,8 +24,9 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(User user, Restaurant restaurant, LocalDate voteDate) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate voteDate) {
 
+        this.id=id;
         this.user = user;
         this.restaurant = restaurant;
         this.voteDate = voteDate;
@@ -61,5 +62,15 @@ public class Vote {
 
     public void setVoteDate(LocalDate voteDate) {
         this.voteDate = voteDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "id=" + id +
+                ", user=" + user +
+                ", restaurant=" + restaurant +
+                ", voteDate=" + voteDate +
+                '}';
     }
 }
