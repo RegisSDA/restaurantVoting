@@ -1,5 +1,6 @@
 package com.github.regissda.restaurantvoting.service;
 
+import com.github.regissda.restaurantvoting.exceptions.AccessDenied;
 import com.github.regissda.restaurantvoting.exceptions.AlreadyExist;
 import com.github.regissda.restaurantvoting.exceptions.NotFoundException;
 import com.github.regissda.restaurantvoting.exceptions.VotingOverException;
@@ -39,16 +40,16 @@ public class VotesServiceImpl implements VotesService {
     private RestaurantDAO restaurantDAO;
 
     @Override
-    public List<VoteTO> getVotesOfUser(String user) {
-        return votesDAO.findAllByUserEquals(usersDAO.getOne(user))
+    public List<VoteTO> getVotesOfUser(String userName) {
+        return votesDAO.findAllByUserEquals(usersDAO.getOne(userName))
                 .stream()
                 .map(a -> convert(a, VoteTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public VoteTO getVote(String name, LocalDate date) {
-        Vote vote = votesDAO.getByVoteDateAndUser(date, usersDAO.getOne(name));
+    public VoteTO getVote(String userName, LocalDate date) {
+        Vote vote = votesDAO.getByVoteDateAndUser(date, usersDAO.getOne(userName));
         if (vote == null) {
             throw new NotFoundException();
         }
@@ -81,12 +82,12 @@ public class VotesServiceImpl implements VotesService {
     @Override
     @CacheEvict(value = "top1", allEntries = true)
     @Transactional
-    public void delete(Integer id, String name) {
-        Vote vote = votesDAO.getOne(id);
-        if (LocalTime.now().isBefore(VOTING_STOP_TIME) && vote.getUser().getLogin().equals(name)) {
+    public void delete(Integer id, String userName) {
+        Vote vote = votesDAO.findOne(id);
+        if (vote.getUser().getLogin().equals(userName) && vote.getVoteDate().equals(LocalDate.now())) {
             votesDAO.delete(id);
         } else {
-            throw new VotingOverException();
+            throw new NotFoundException();
         }
     }
 

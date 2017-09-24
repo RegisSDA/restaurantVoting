@@ -83,7 +83,11 @@ public class UserRestController {
 
     @DeleteMapping(value = "/votes/{id}")
     public ResponseEntity deleteCurrentVote(@PathVariable("id") Integer id) {
-        votesService.delete(id, AuthorizedUser.getUserName());
+        if (LocalTime.now().isBefore(VOTING_STOP_TIME)) {
+            votesService.delete(id, AuthorizedUser.getUserName());
+        } else {
+            throw new VotingOverException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

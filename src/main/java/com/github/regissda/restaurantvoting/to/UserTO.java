@@ -23,6 +23,7 @@ public class UserTO {
         this.roles = roles;
     }
 
+
     public String getLogin() {
         return login;
     }
@@ -45,5 +46,14 @@ public class UserTO {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTO{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

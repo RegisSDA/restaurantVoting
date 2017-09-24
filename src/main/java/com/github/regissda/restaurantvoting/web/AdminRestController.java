@@ -86,7 +86,7 @@ public class AdminRestController {
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity saveUser(@RequestBody UserTO userTO) {
-        userService.save(userTO);
+        userService.create(userTO);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -105,7 +105,12 @@ public class AdminRestController {
 
     @DeleteMapping(value = "/users/{login}")
     public ResponseEntity deleteUser(@PathVariable("login") String login) {
-        userService.delete(login);
+        if (login.equals(AuthorizedUser.getUserName())) {
+            userService.selfDelete(login);
+        } else {
+            userService.delete(login);
+        }
+
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

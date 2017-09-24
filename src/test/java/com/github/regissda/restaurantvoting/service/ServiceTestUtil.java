@@ -1,8 +1,12 @@
 package com.github.regissda.restaurantvoting.service;
 
-import com.github.regissda.restaurantvoting.to.RestaurantLight;
-import com.github.regissda.restaurantvoting.to.RestaurantWithDishes;
+import com.github.regissda.restaurantvoting.model.Role;
+import com.github.regissda.restaurantvoting.to.*;
 
+import java.time.LocalDate;
+import java.util.EnumSet;
+
+import static com.github.regissda.restaurantvoting.model.Role.ROLE_USER;
 import static com.github.regissda.restaurantvoting.repository.TestUtil.*;
 
 /**
@@ -25,5 +29,36 @@ public class ServiceTestUtil {
 
     public static RestaurantWithDishes updateRestaurantWithDishes(RestaurantWithDishes restaurantWithDishes) {
         return new RestaurantWithDishes(restaurantWithDishes.getName(), DISH_1_2, DISH_2_3, DISH_3_1);
+    }
+
+    public static final VoteTO VOTE_TO_1 = new VoteTO(1, RESTAURANT_1.getName(), "2017-09-10");
+    public static final VoteTO VOTE_TO_2 = new VoteTO(2, RESTAURANT_1.getName(), "2017-09-10");
+    public static final VoteTO VOTE_TO_3 = new VoteTO(3, RESTAURANT_2.getName(), "2017-09-10");
+    public static final VoteTO VOTE_TO_4 = new VoteTO(4, RESTAURANT_3.getName(), "2017-09-11");
+    public static final VoteTO VOTE_TO_5 = new VoteTO(5, RESTAURANT_3.getName(), "2017-09-11");
+    public static final VoteTO VOTE_TO_6 = new VoteTO(6, RESTAURANT_2.getName(), "2017-09-11");
+
+    public static VoteTO createVoteTO() {
+        return new VoteTO(null, VOTE_TO_1.getRestaurant(), LocalDate.now().toString());
+    }
+
+    public static VoteTO updateVoteTO(VoteTO voteTO) {
+        return new VoteTO(voteTO.getId(), RESTAURANT_2.getName(), voteTO.getDate());
+    }
+
+    public static final RestaurantWithVotes RESTAURANT_WITH_VOTES_1 = new RestaurantWithVotes(RESTAURANT_LIGHT_1.getName(), 0);
+    public static final RestaurantWithVotes RESTAURANT_WITH_VOTES_2 = new RestaurantWithVotes(RESTAURANT_LIGHT_2.getName(), 1);
+    public static final RestaurantWithVotes RESTAURANT_WITH_VOTES_3 = new RestaurantWithVotes(RESTAURANT_LIGHT_3.getName(), 2);
+
+    public static final UserTO USER_TO_1 = new UserTO(USER_1.getLogin(), USER_1.getPassword(), USER_1.getRoles());
+    public static final UserTO USER_TO_2 = new UserTO(USER_2.getLogin(), USER_2.getPassword(), USER_2.getRoles());
+    public static final UserTO USER_TO_3 = new UserTO(USER_3.getLogin(), USER_3.getPassword(), USER_3.getRoles());
+
+    public static UserTO createUserTO() {
+        return new UserTO("_createdUser", "createdPass", EnumSet.allOf(Role.class));
+    }
+
+    public static UserTO updatedUserTO(UserTO userTO) {
+        return new UserTO(userTO.getLogin(), "newPassword", userTO.getRoles());
     }
 }

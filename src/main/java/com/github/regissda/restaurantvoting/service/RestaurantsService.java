@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by MSI on 23.09.2017.
  */
+
 public interface RestaurantsService {
     List<RestaurantLight> getRestaurants();
 

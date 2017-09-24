@@ -40,4 +40,14 @@ public class VoteTO {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+    public VoteTO() {
+    }
+
+    public VoteTO(Integer id, String restaurant, String date) {
+
+        this.id = id;
+        this.restaurant = restaurant;
+        this.date = date;
+    }
 }

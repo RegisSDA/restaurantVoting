@@ -48,12 +48,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void save(UserTO userTO) {
-        User target = usersDAO.getOne(userTO.getLogin());
+    public User create(UserTO userTO) {
+        User target = usersDAO.findOne(userTO.getLogin());
         if (target != null) {
             throw new AlreadyExist();
         }
-        usersDAO.save(convert(userTO, User.class));
+        return usersDAO.save(convert(userTO, User.class));
     }
 
     @Override
@@ -68,6 +68,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void selfUpdate(UserTO userTO) {
         usersDAO.save(convert(userTO, User.class));
+    }
+
+    @Override
+    public void selfDelete(String login) {
+        usersDAO.delete(login);
     }
 
     @Override
