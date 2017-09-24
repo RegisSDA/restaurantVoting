@@ -13,7 +13,7 @@ public class BeanMatcher<T> {
     private Class<T> entity;
     private Equality<T> equality;
 
-    public interface Equality<T>{
+    public interface Equality<T> {
         boolean areEqual(T expected, T actual);
     }
 
@@ -38,16 +38,17 @@ public class BeanMatcher<T> {
         }
     }
 
-    private BeanMatcher(Class<T> entity,Equality<T> equality){
+    private BeanMatcher(Class<T> entity, Equality<T> equality) {
         this.entity = entity;
         this.equality = equality;
     }
-    public static <T>  BeanMatcher of(Class<T> entity,Equality<T> equality){
-        return new BeanMatcher<T>(entity,equality);
+
+    public static <T> BeanMatcher of(Class<T> entity, Equality<T> equality) {
+        return new BeanMatcher<T>(entity, equality);
     }
 
-    public static <T> BeanMatcher of(Class<T> entity){
-        return new BeanMatcher<>(entity,((expected, actual) ->(expected==actual||expected.toString().equals(actual))));
+    public static <T> BeanMatcher of(Class<T> entity) {
+        return new BeanMatcher<>(entity, ((expected, actual) -> (expected == actual || expected.toString().equals(actual.toString()))));
     }
 
     private Wrapper wrap(T entity) {
@@ -58,12 +59,12 @@ public class BeanMatcher<T> {
         return list.stream().map(this::wrap).collect(Collectors.toList());
     }
 
-    public void assertEquals(T expected, T actual){
-        Assert.assertEquals(wrap(expected),wrap(actual));
+    public void assertEquals(T expected, T actual) {
+        Assert.assertEquals(wrap(expected), wrap(actual));
     }
 
-    public void assertEquals(List<T> expected, List<T> actual){
-        Assert.assertEquals(wrap(expected),wrap(actual));
+    public void assertEquals(List<T> expected, List<T> actual) {
+        Assert.assertEquals(wrap(expected), wrap(actual));
     }
 
 }

@@ -28,9 +28,9 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.github.regissda.restaurantvoting.model"/>
     <context:component-scan base-package="com.github.regissda.restaurantvoting.repository"/>
+    <context:component-scan base-package="com.github.regissda.restaurantvoting.service"/>
     <jpa:repositories base-package="com.github.regissda.restaurantvoting.repository"/>
     <tx:annotation-driven/>
-
 
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

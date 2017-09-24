@@ -31,4 +31,13 @@ public class VoteTO {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "VoteTO{" +
+                "id=" + id +
+                ", restaurant='" + restaurant + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

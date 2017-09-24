@@ -31,4 +31,12 @@ public class RestaurantWithVotes {
     public void setVotes(long votes) {
         this.votes = votes;
     }
+
+    @Override
+    public String toString() {
+        return "RestaurantWithVotes{" +
+                "name='" + name + '\'' +
+                ", votes=" + votes +
+                '}';
+    }
 }

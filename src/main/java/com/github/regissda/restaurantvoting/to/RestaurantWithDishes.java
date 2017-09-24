@@ -2,6 +2,7 @@ package com.github.regissda.restaurantvoting.to;
 
 import com.github.regissda.restaurantvoting.model.Dish;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,5 +27,21 @@ public class RestaurantWithDishes {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public RestaurantWithDishes(String name, Dish... dishes) {
+        this.name = name;
+        this.dishes = Arrays.asList(dishes);//тк ТО, не нужна модифицируемость
+    }
+
+    public RestaurantWithDishes() {
+    }
+
+    @Override
+    public String toString() {
+        return "RestaurantWithDishes{" +
+                "name='" + name + '\'' +
+                ", dishes=" + dishes +
+                '}';
     }
 }

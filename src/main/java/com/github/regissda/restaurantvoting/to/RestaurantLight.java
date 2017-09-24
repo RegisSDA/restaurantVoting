@@ -13,4 +13,19 @@ public class RestaurantLight {
     public void setName(String name) {
         this.name = name;
     }
+
+    public RestaurantLight() {
+    }
+
+    public RestaurantLight(String name) {
+
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "RestaurantLight{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
