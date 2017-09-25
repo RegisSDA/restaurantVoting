@@ -75,8 +75,8 @@ public class AdminRestController {
 
 
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserTO> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<UserTO>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/users/{login}", produces = MediaType.APPLICATION_JSON_VALUE)

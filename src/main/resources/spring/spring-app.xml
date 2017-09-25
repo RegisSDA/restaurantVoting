@@ -5,4 +5,5 @@
 
     <import resource="spring-db.xml"/>
     <import resource="spring-security.xml"/>
+    <import resource="spring-cache.xml"/>
 </beans>

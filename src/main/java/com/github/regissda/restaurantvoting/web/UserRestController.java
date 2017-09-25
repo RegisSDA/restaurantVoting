@@ -67,10 +67,10 @@ public class UserRestController {
     }
 
 
-    @PutMapping(value = "/votes/{dateTime}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/votes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateVote(@RequestBody VoteTO voteTO,
-                                     @PathVariable("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date) {
-        if (!date.toString().equals(voteTO.getDate())) {
+                                     @PathVariable("id") Integer id) {
+        if (id.equals(voteTO.getId())) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         if (LocalTime.now().isBefore(VOTING_STOP_TIME) && voteTO.getDate().equals(LocalDate.now().toString())) {
