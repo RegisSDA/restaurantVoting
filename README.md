@@ -19,7 +19,7 @@
 
 [Интерфейс ADMIN - rest/v1/admin](#admin)  
 
-[Все рестараны](#rest_getAll)  
+[Все рестораны](#rest_getAll)  
 [Получить ресторан](#rest_get)  
 [Создать ресторан](#rest_save)  
 [Обновить ресторан](#rest_update)  
@@ -44,7 +44,7 @@
 
 <a name="admin"><h2>Интерфейс ADMIN</h2></a>
 Базовый URL - - rest/v1/admin
-<a name="rest_getAll"><h3>Все рестараны</h3></a>
+<a name="rest_getAll"><h3>Все рестораны</h3></a>
 
 URL: /restaurants  
 Method: GET  
@@ -106,7 +106,7 @@ for linux: curl -u testuser1:testuser1 -X PUT -H "Content-Type: application/json
 Notes:
 
 
-<a name="rest_del"><h3>Удалить рестаран</h3></a>
+<a name="rest_del"><h3>Удалить ресторан</h3></a>
 
 URL: /restaurants/:name  
 Method: DELETE  
@@ -286,7 +286,7 @@ Code: 200
 [{"name":"testrest3","votes":1}]  
 Error Response:  
 Sample Call:  curl -u testuser1:testuser1 http://localhost:8080/restaurantVoting/rest/v1/user/restaurants/votes?date=2017-09-11  
-Notes: При отсутствии даты - возвращает за сегодняшний день
+Notes: При отсутствии даты - возвращает за сегодняшний день. Возвращаются только рестораны хотя бы с 1 голосом.
 
 
 <a id="get_rest_with_menu"><h3>Рестораны с меню</h3></a>
