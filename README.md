@@ -21,7 +21,7 @@
 
 [Все рестараны](#rest_getAll)  
 [Получить ресторан](#rest_get)  
-[Сохранить/обновить ресторан](#rest_save)  
+[Создать ресторан](#rest_save)  
 [Обновить ресторан](#rest_update)  
 [Удалить ресторан](#rest_del) 
 
@@ -35,7 +35,7 @@
 
 [История своих голосов](#get_votes)  
 [Посмотреть голос](#get_vote)  
-[Создать/обновить голос](#post_vote) 
+[Создать голос](#post_vote)   
 [Обновить голос](#put_vote)  
 [Удалить голос](#del_vote)  
 [Результаты голосования](#get_rest_with_votes)  
@@ -72,7 +72,7 @@ Sample Call: curl -u testuser1:testuser1 http://localhost:8080/restaurantVoting/
 Notes:  
 
 
-<a id="rest_save"><h3>Сохранить ресторан</h3></a>
+<a id="rest_save"><h3>Создать ресторан</h3></a>
 
 URL: /restaurants  
 Method: POST  
@@ -146,7 +146,7 @@ Sample Call:  curl -u testuser1:testuser1 http://localhost:8080/restaurantVoting
 Notes: 
 
 
-<a name="post_user"><h3>Сохранить пользователя</h3></a>
+<a name="post_user"><h3>Создать пользователя</h3></a>
 
 URL: /users  
 Method: POST  
@@ -163,7 +163,7 @@ for linux: curl -u testuser1:testuser1 -X POST -H "Content-Type: application/jso
 Notes:
 
 
-<a name="put_user"><h3>бновить пользователя</h3></a>
+<a name="put_user"><h3>Обновить пользователя</h3></a>
 
 URL: /users/:login  
 Method: PUT  
