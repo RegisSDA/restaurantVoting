@@ -21,8 +21,8 @@
 
 
     <jdbc:initialize-database>
-        <jdbc:script location="classpath:db/setSchema.sql"/>
-        <!--<jdbc:script location="db/populateDB.sql"/>-->
+        <jdbc:script location="classpath*:db/setSchema.sql"/>
+        <jdbc:script location="classpath*:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
     <context:annotation-config/>

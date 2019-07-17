@@ -11,7 +11,7 @@ create table if not exists REST_MENU
     RESTAURANT_NAME VARCHAR(255) not null,
     NAME            VARCHAR(255),
     PRICE           INTEGER      not null,
-    foreign key (RESTAURANT_NAME) references RESTAURANTS
+    foreign key (RESTAURANT_NAME) references RESTAURANTS ON DELETE CASCADE
 );
 
 create table if not exists USERS
@@ -25,7 +25,7 @@ create table if not exists USER_ROLES
 (
     USER_ID VARCHAR(255) not null,
     ROLE    VARCHAR(255),
-    foreign key (USER_ID) references USERS
+    foreign key (USER_ID) references USERS ON DELETE CASCADE
 );
 
 create table if not exists VOTES
@@ -35,8 +35,8 @@ create table if not exists VOTES
     VOTEDATE        DATE,
     RESTAURANT_NAME VARCHAR(255),
     USER_LOGIN      VARCHAR(255),
-    foreign key (RESTAURANT_NAME) references RESTAURANTS,
-    foreign key (USER_LOGIN) references USERS
+    foreign key (RESTAURANT_NAME) references RESTAURANTS ON DELETE CASCADE,
+    foreign key (USER_LOGIN) references USERS ON DELETE CASCADE
 );
 
 
