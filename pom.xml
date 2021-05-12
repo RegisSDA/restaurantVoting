@@ -14,7 +14,7 @@
         <java.version>1.8</java.version>
         <spring-webmvc.version>4.3.11.RELEASE</spring-webmvc.version>
         <spring-test.version>4.3.11.RELEASE</spring-test.version>
-        <spring-security.version>4.2.3.RELEASE</spring-security.version>
+        <spring-security.version>5.2.10.RELEASE</spring-security.version>
         <spring-data-jpa.version>1.11.7.RELEASE</spring-data-jpa.version>
         <hibernate-core.version>5.2.10.Final</hibernate-core.version>
         <tomcat-jdbc.version>9.0.0.M26</tomcat-jdbc.version>
