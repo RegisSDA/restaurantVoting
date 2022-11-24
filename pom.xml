@@ -16,7 +16,7 @@
         <spring-test.version>4.3.11.RELEASE</spring-test.version>
         <spring-security.version>4.2.3.RELEASE</spring-security.version>
         <spring-data-jpa.version>1.11.7.RELEASE</spring-data-jpa.version>
-        <hibernate-core.version>5.2.10.Final</hibernate-core.version>
+        <hibernate-core.version>5.3.20.Final</hibernate-core.version>
         <tomcat-jdbc.version>9.0.0.M26</tomcat-jdbc.version>
         <jackson-json.version>2.9.0</jackson-json.version>
 
